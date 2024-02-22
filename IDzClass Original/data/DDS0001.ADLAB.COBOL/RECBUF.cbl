@@ -1,0 +1,2 @@
+       COPY RECBUF1.
+       COPY RECBUF2.

@@ -1,0 +1,126 @@
+      *****************************************************************
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID.  CALC2.
+       AUTHOR. calc.
+       INSTALLATION. COBOL DEVELOPMENT CENTER.
+       DATE-WRITTEN. 01/01/08.
+       DATE-COMPILED. 01/01/08.
+       SECURITY. NON-CONFIDENTIAL.
+
+      *****************************************************************
+      *****************************************************************
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SOURCE-COMPUTER. IBM-ISERIES.
+       OBJECT-COMPUTER. IBM-ISERIES.
+       SPECIAL-NAMES. C01 IS TOP-OF-PAGE.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+             SELECT INFILE ASSIGN TO UT-S-INFILE
+             ORGANIZATION IS LINE SEQUENTIAL
+             ACCESS MODE IS SEQUENTIAL
+             FILE STATUS IS IFCODE.
+             SELECT OUTFILE ASSIGN TO "c:\outputFile.dat" ORGANIZATION
+             IS LINE SEQUENTIAL ACCESS MODE IS SEQUENTIAL FILE STATUS IS
+             OFCODE.
+      *****************************************************************
+      *****************************************************************
+       DATA DIVISION.
+       FILE SECTION.
+       FD  INFILE
+           LABEL RECORDS ARE STANDARD
+           DATA RECORD IS INPUTREC
+           RECORD CONTAINS 80 CHARACTERS
+           RECORDING MODE IS F
+           BLOCK CONTAINS 0 RECORDS.
+       01  INPUTREC.
+           05 FIELD1 PIC X(40).
+           05 FIELD2 PIC X(40).
+       FD  OUTFILE
+           LABEL RECORDS ARE STANDARD
+           DATA RECORD IS OUTPUTREC
+           RECORD CONTAINS 80 CHARACTERS
+           RECORDING MODE IS F
+           BLOCK CONTAINS 0 RECORDS.
+       01  OUTPUTREC.
+           05 FIELD1 PIC X(40).
+           05 FIELD2 PIC X(40).
+
+       WORKING-STORAGE SECTION.
+       01  FILE-STATUS-CODES.
+           05  IFCODE           PIC X(2).
+               88 CODE-READ     VALUE SPACES.
+               88 NO-MORE-DATA  VALUE "10".
+           05  OFCODE           PIC X(2).
+               88 CODE-WRITE    VALUE SPACES.
+
+       01  COUNTERS-AND-ACCUMULATORS.
+           05  REC-KTR        PIC S9(4)     COMP.
+           05  TOTAL-AMOUNT   PIC S9(3)V99  COMP-3.
+
+       01  CALC-FIELDS.
+           05 TOP-NUMBER       PIC S9(4)V99 COMP-3.
+           05 BOTTOM-NUMBER    PIC S9(5)V99.
+           05 RESULT           PIC S9(7)V99.
+           05 REMNDER          PIC 99.
+
+      * Convert Fahrenheit to Celsius and back - start with PIC 9(3).
+       01  TEMP-CONVERTER.
+           05 FAHRENHEIT        PIC 9(3)V999.
+           05 CELSIUS           PIC 9(3)V999.
+
+      * Fields for calculating simple interest
+       01  SIMPLE-INTEREST.
+           05 AMOUNT           PIC 9(7)V99 VALUE 0.
+           05 PRINCIPAL        PIC 9(7)V99 VALUE 100000.
+           05 INTEREST  PIC V99 VALUE .05.
+           05 NBRYEARS  PIC 9(4) COMP VALUE 10.
+
+      ******************************************************************
+       PROCEDURE DIVISION.
+           PERFORM 000-CALC THRU 000-EXIT.
+           PERFORM 100-MAINLINE THRU 100-EXIT.
+           PERFORM 200-CLEANUP THRU 200-EXIT.
+           GOBACK.
+
+      ******************************************************************
+      * This routine should perform file open and initial(priming) reads
+      ******************************************************************
+       000-CALC.
+           MOVE 111.11 TO TOP-NUMBER.
+           MOVE 222.33 TO BOTTOM-NUMBER.
+           ADD TOP-NUMBER TO BOTTOM-NUMBER GIVING RESULT.
+
+           SUBTRACT BOTTOM-NUMBER FROM RESULT GIVING TOP-NUMBER.
+           MULTIPLY TOP-NUMBER BY BOTTOM-NUMBER GIVING RESULT.
+           DIVIDE BOTTOM-NUMBER BY TOP-NUMBER GIVING RESULT ROUNDED
+               REMAINDER REMNDER.
+
+           MOVE 98 TO FAHRENHEIT.
+           COMPUTE CELSIUS ROUNDED =
+             ( 5 * (FAHRENHEIT - 32) / 9).
+
+           MOVE 98 TO CELSIUS.
+           COMPUTE FAHRENHEIT ROUNDED =
+             (( FAHRENHEIT * 9) / 5 ) + 32.
+
+
+
+           COMPUTE AMOUNT =
+               ( PRINCIPAL * ( 1 + ( NBRYEARS * INTEREST )) ).
+
+
+
+       000-EXIT.
+           EXIT.
+      ******************************************************************
+      *  This routine contains the business logic for the program
+      ******************************************************************
+       100-MAINLINE.
+       100-EXIT.
+
+      ******************************************************************
+      *  This routine should perform file close operations
+      ******************************************************************
+       200-CLEANUP.
+       200-EXIT.

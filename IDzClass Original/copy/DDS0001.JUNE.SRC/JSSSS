@@ -1,0 +1,60 @@
+//IBMUSERA JOB (ACCT),'IBMUSER',MSGCLASS=H,
+//      NOTIFY=IBMUSER,CLASS=A,MSGLEVEL=(1,1),TIME=(0,10)
+//MYLIB JCLLIB ORDER=SYS1.SACBCNTL
+//********************************************************************/
+//*$MAC(ACBJBAI9) COMP(5695DF123): BATCH  - GENERATES VOLUME LIST    */
+//*                                                                  */
+//* PROPRIETARY V3 STATEMENT                                         */
+//* LICENSED MATERIALS - PROPERTY OF IBM                             */
+//* 5694-A01                                                     @C1C*/
+//* COPYRIGHT 1996,2011  IBM CORP.                                   */
+//* END PROPRIETARY V3 STATEMENT                                     */
+//*                                                                  */
+//* CHANGE ACTIVITY:                                                 */
+//*                                                                  */
+//*$K0=NAVIQUEST,HACS110,95/08/04,SNJADR: INITIAL VERSION        @K0A*/
+//*$K1=KNQ0003,HACS110,95/08/04,SNJTCS: COMMENT CORRECTION       @K1C*/
+//*$L0=NAVIQUEST,HACS120,96/06/18,SNJTCS: RELEASE 2 CHANGES      @L0A*/
+//*10/14/96  CCY - HDZ11C0: Ship as SPE                      @WA22861*/
+//* $T2=k150142,HDZ11E0,111997,SNJTCS: Adding TABL2 parameter    @T2A*/
+//*$C1=OA34489,HDZ1C10,10/10/06,IBSTG: Add comment, insufficient @C1A*/
+//*                                    storage                   @C1A*/
+//*                                                                  */
+//********************************************************************/
+//********************************************************************
+//*                                                                  *
+//* SAMPLE JCL TO GENERATE ISMF DASD VOLUME LIST IN BATCH FROM A     *
+//* PREVIOUSLY SAVED QUERY, AND SAVE THE GENERATED LIST              *
+//*                                                                  *
+//*   INSTRUCTIONS BEFORE SUBMITTING:                                *
+//*                                                                  *
+//*      CHANGE JOBCARD                                              *
+//*      CHANGE PREFIX                                               *
+//*      CHANGE PARAMETERS                                           *
+//*                                                            12@C1A*
+//*      INCREASE THE REGION SIZE IN ACBJBAOB IF YOU DO NOT HAVE     *
+//*      ENOUGH VIRTUAL STORAGE TO GENERATE DASD VOLUME LIST.        *
+//*      FOR EXAMPLE, THE FOLLOWING ISMF REASON CODES INDICATE       *
+//*      INSUFFICIENT STORAGE (SEE ISPF LOG):                        *
+//*      REASON CODE (3037),                                         *
+//*      REASON CODE (3258).                                         *
+//*      THE REQUIRED REGION SIZE DEPENDS ON THE NUMBER OF VOLUMES   *
+//*      ENTRIES AND CAN BE ESTIMATED ON THE BASIS OF 10K FOR EACH   *
+//*      VOLUME ENTRY (THIS DATA IS APPROXIMATE AND CAN VARY ON      *
+//*      DIFFERENT SYSTEMS. SET REGION=(0M) TO HAVE ALL STORAGE      *
+//*      AVAILABLE).                                                 *
+//*                                                                  *
+//*   PARAMETERS:                                                    *
+//*                                                                  *
+//*      PARAMETR FOLLOWING SAVE - NAME OF SAVED LIST (OUTPUT)       *
+//*      QUERY - NAME WITH WHICH THE QUERY WAS SAVED (INPUT)         *
+//*                                                                  *
+//********************************************************************
+//DASDLST  EXEC  ACBJBAOB,PLIB1=SYS1.DGTPLIB,TABL2=userid.TEST.ISPTABL
+//SYSTSIN  DD *
+PROFILE PREFIX(IBMUSER) MSGID
+ISPSTART CMD(ACBQBAI4 +
+SAVE DASDLST QUERY(QUERY1)) +
+NEWAPPL(DGT) BATSCRW(132) BATSCRD(27) BREDIMAX(3) BDISPMAX(99999999)
+/*
+//********************************************************************

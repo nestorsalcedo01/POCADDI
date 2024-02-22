@@ -1,0 +1,38 @@
+//DDS0001D JOB REGION=4M,CLASS=A,
+// TIME=(1),MSGCLASS=H,NOTIFY=&SYSUID,MSGLEVEL=(1,1)
+//********************************************************************
+//*   RUN SAMPLE PROGRAM SAM3 WITH CODE COVERAGE
+//********************************************************************
+//RUNSAM3 EXEC PGM=COBVSAMC,PARM='010000'
+//STEPLIB  DD DSN=DDS0001.TEST.PDSELOAD,DISP=SHR
+//********************************************************************
+//********************************************************************
+//AQEV4LST  DD DISP=SHR,DSN=DDS0001.TEST.LISTING
+//CEEOPTS   DD *
+   TEST(,,,DBM)
+/*
+//*   ENVAR("EQA_STARTUP_KEY=CC,,moduleexclude=SAM4")
+//*   TEST(,,,DBM)
+//*   ENVAR("EQA_STARTUP_KEY=CC")
+//*   TEST(,,,DBMDT%DDS0001:)
+//*   TEST(,,,TCPIP&9.76.128.131%8005:*) -- use with headless CC
+//*   ENVAR("EQA_STARTUP_KEY=CC,,moduleexclude=SAM4")
+//*  ,ENVAR("EQA_STARTUP_KEY=CC")
+//*  TEST(,,,DBM)
+//*   ,ENVAR("EQA_STARTUP_KEY=CC")
+//*   TEST(,,,TCPIP&9.76.128.131%8005:*)
+//TMVSAM DD DSN=DDS0001.REGI.VSAM,DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//SYSDEBUG  DD DSN=DDS0001.TEST.SYSDEBUG,DISP=SHR
+//SYSOUT   DD SYSOUT=*
+//IDIOPTS  DD *
+ INCLUDE,MAXMINIDUMPPAGES(1000)
+ NODUP(NORMAL(0))
+/*
+//IDITRACE DD SYSOUT=*
+//IDIOPTS  DD *
+ INCLUDE,MAXMINIDUMPPAGES(1000)
+ NODUP(NORMAL(0))
+/*
+//IDITRACE DD SYSOUT=*
+//

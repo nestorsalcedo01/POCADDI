@@ -1,0 +1,508 @@
+
+A********************************************************************
+A* PRG01FM - Master File Maintenance Data Descriptions
+A* DESCRIPTION - A display file describing the formats that the
+A* RPG/400 program PRG01 uses to allow work station
+A* maintenance of the following time reporting master
+A* files: EMPMST - Employee master file
+A* PRJMST - Project master file
+A* RSNMST - Reason code master file
+A********************************************************************
+A* The following code contains keywords that describe the overall
+A* display file.
+A*
+A DSPSIZ(24 80 *DS3)
+A PRINT
+A INDARA
+A CA03(03 'end of job')
+A CA04(04 'return to maintenance sele-
+A ction')
+A R SELECT
+A*
+A* The SELECT format describes the literals and fields that you
+A* use to enter the maintenance selection code to determine which
+A* time reporting master file you want to maintain.
+A*
+A BLINK
+A 60 ALARM
+A 2 5'PRG01'
+A 2 30'Time Reporting System'
+A 2 70DATE
+A EDTCDE(Y)
+A 3 30'Maintenance Selection'
+A 3 70TIME
+A 6 14'Enter an X beside the application -
+A you want to maintain'
+AAN01N02N03T.Name++++++Rlen++TDpBLinPosFunctions++++++++++++++++++++*
+A EMPAPL 1A B 9 25
+A 9 28'Employee Master Maintenance'
+A PRJAPL 1A B 10 25
+A 10 28'Project Master Maintenance'
+A RSNAPL 1A B 11 25
+A 11 28'Reason Code Master Maintenance'
+A EMESS 50A O 21 16
+A 60 DSPATR(HI)
+A 23 7'F3-End of Job'
+A R EMPSEL
+A*
+A* The EMPSEL format describes the literals and fields that you
+A* use to enter the employee number and the maintenance action code
+A* for selecting an employee master record.
+A*
+A BLINK
+A 60 ALARM
+A 2 5'PRG01'
+A 2 30'Time Reporting System'
+A 2 70DATE
+A EDTCDE(Y)
+A 3 27'Employee Master Maintenance'
+A 3 70TIME
+A 6 27'Employee Number'
+A EMPNO R B 6 44REFFLD(RCEMP/EMPNO *LIBL/EMPMST)
+A 8 27'Action Code'
+A ACODE 1A B 8 44
+A 8 48'A-Add'
+A 9 48'C-Change'
+A 10 48'D-Delete'
+A EMESS 50A O 21 16
+A 60 DSPATR(HI)
+A 23 7'F3-End of Job'
+A 23 25'F4-Maintenance Selection'
+A R EMPMNT
+A*
+A* The EMPMNT format describes the literals and fields that you
+A* use to enter employee master maintenance.
+A*
+A BLINK
+A 61 ALARM
+A CA05(05 'return to employee selecti-
+A on')
+A 2 5'PRG01'
+A 2 30'Time Reporting System'
+A 2 70DATE
+A EDTCDE(Y)
+A 3 70TIME
+A 3 27'Employee Master Maintenance'
+A 5 14'Number'
+A EMPNO R O 5 22REFFLD(RCEMP/EMPNO *LIBL/EMPMST)
+A 5 31'Name'
+A ENAME R B 5 37REFFLD(RCEMP/ENAME *LIBL/EMPMST)
+A 90 DSPATR(PR)
+A 7 18'Category'
+A EMCAT R B 7 37REFFLD(RCEMP/EMCAT *LIBL/EMPMST)
+A 90 DSPATR(PR)
+A 8 18'Department'
+A EDEPT R B 8 37REFFLD(RCEMP/EDEPT *LIBL/EMPMST)
+A 90 DSPATR(PR)
+A 9 18'Location'
+A ELOCN R B 9 37REFFLD(RCEMP/ELOCN *LIBL/EMPMST)
+A 90 DSPATR(PR)
+A 10 18'USRID'
+A EUSRI R B 10 37REFFLD(RCEMP/EUSRI *LIBL/EMPMST)
+A 90 DSPATR(PR)
+A 11 18'Normal week hours'
+A ENHRS R B 11 37REFFLD(RCEMP/ENHRS *LIBL/EMPMST)
+A 90 DSPATR(PR)
+A 13 30'Time Reporting History'
+A 15 40'Current Year To Prior'
+A 16 40' Month Date Year'
+A 17 19'Project Related'
+A EPHRC R O 17 41REFFLD(RCEMP/EPHRC *LIBL/EMPMST)
+A EPHRY R O 17 49REFFLD(RCEMP/EPHRY *LIBL/EMPMST)
+A EPHRP R O 17 58REFFLD(RCEMP/EPHRP *LIBL/EMPMST)
+A 18 19'Non Project Related'
+A EPNRC R O 18 41REFFLD(RCEMP/EPNRC *LIBL/EMPMST)
+A EPNRY R O 18 49REFFLD(RCEMP/EPNRY *LIBL/EMPMST)
+A EPNRP R O 18 58REFFLD(RCEMP/EPNRP *LIBL/EMPMST)
+A EMESS 50 O 21 16
+A 61 DSPATR(HI)
+A 23 7'F3-End of Job'
+A 23 25'F4-Maintenance Selection'
+A 23 55'F5-Employee Selection'
+A 11 44'(eg. 40.0 enter 400)'
+A R PRJSEL
+A*
+A* The PRJSEL format describes the literals and fields that you use
+A* to enter the project code and the maintenance action code for
+A* selecting a project master record.
+A*
+A BLINK
+A 60 ALARM
+A 2 5'PRG01'
+A 2 30'Time Reporting System'
+A 2 70DATE
+A EDTCDE(Y)
+A 3 27'Project Master Maintenance'
+A 3 70TIME
+A 6 27'Project Code'
+A PRCDE R B 6 44REFFLD(RCPRJ/PRCDE *LIBL/PRJMST)
+A 8 27'Action Code'
+A ACODE 1A B 8 44
+A 8 48'A-Add'
+A 9 48'C-Change'
+A 10 48'D-Delete'
+A EMESS 50 O 21 16
+A 60 DSPATR(HI)
+A 23 7'F3-End of Job'
+A 23 25'F4-Maintenance Selection'
+A R PRJMNT
+A*
+A* The PRJMNT format describes the literals and fields that you
+A* use to enter project master maintenance.
+A*
+A BLINK
+A 61 ALARM
+A CA06(06 'return to project selectio-
+A n')
+A 2 5'PRG01'
+A 2 30'Time Reporting System'
+A 2 70DATE
+A EDTCDE(Y)
+A 3 70TIME
+A 3 27'Project Master Maintenance'
+A 5 29'Project Code'
+A PRCDE R O 5 43REFFLD(RCPRJ/PRCDE *LIBL/PRJMST)
+A 7 10'Description'
+A PRDSC R B 7 23REFFLD(RCPRJ/PRDSC *LIBL/PRJMST)
+A 90 DSPATR(PR)
+A 9 13'Responsibility'
+A PRRSP R B 9 41REFFLD(RCPRJ/PRRSP *LIBL/PRJMST)
+A 90 DSPATR(PR)
+A 10 13'Project Start Date'
+A PRSTR R B 10 41REFFLD(RCPRJ/PRSTR *LIBL/PRJMST)
+A 90 DSPATR(PR)
+A 10 53'(MMDDYY)'
+A 11 13'Project Estimated End Date'
+A PREND R B 11 41REFFLD(RCPRJ/PREND *LIBL/PRJMST)
+A 90 DSPATR(PR)
+A 11 53'(MMDDYY)'
+A 12 13'Project Completion Date'
+A PRCMP R B 12 41REFFLD(RCPRJ/PRCMP *LIBL/PRJMST)
+A 90 DSPATR(PR)
+A 12 53'(MMDDYY)'
+A 13 13'Project Estimated Hours'
+A PREST R B 13 41REFFLD(RCPRJ/PREST *LIBL/PRJMST)
+A 90 DSPATR(PR)
+A 15 33'Project History'
+A 17 27'Current'
+A 17 37'Year To Prior'
+A 18 28'Month'
+A 18 39'Date Year'
+A PRHRC R O 19 27REFFLD(RCPRJ/PRHRC *LIBL/PRJMST)
+A PRHRY R O 19 36REFFLD(RCPRJ/PRHRY *LIBL/PRJMST)
+A PRHRP R O 19 47REFFLD(RCPRJ/PRHRP *LIBL/PRJMST)
+A EMESS 50 O 21 16
+A 61 DSPATR(HI)
+A 23 7'F3-End of Job'
+A 23 25'F4-Maintenance Selection'
+A 23 54'F6-Project Code Selection'
+A R RSNSEL
+A* The RSNSEL format describes the literals and fields that you
+A* use to enter the reason code and maintenance action code for
+A* selecting a reason code master record.
+A BLINK
+A 60 ALARM
+A 2 5'PRG01'
+A 2 30'Time Reporting System'
+A 2 70DATE
+A EDTCDE(Y)
+A 3 26'Reason Code Master Maintenance'
+A 3 70TIME
+A 6 27'Reason Code'
+A RSCDE R B 6 44REFFLD(RCRSN/RSCDE *LIBL/RSNMST)
+A 8 27'Action Code'
+A ACODE 1A B 8 44
+A 8 48'A-Add'
+A 9 48'C-Change'
+A 10 48'D-Delete'
+A EMESS 50 O 21 16
+A 60 DSPATR(HI)
+A 23 7'F3-End of Job'
+A 23 25'F4-Maintenance Selection'
+A R RSNMNT
+A* The RSNMNT format describes the literals and fields that you
+A* use to enter reason code master maintenance.
+A BLINK
+A 61 ALARM
+A CA07(07 'return to reason code sele-
+A ction')
+A 2 5'PRG01'
+A 2 30'Time Reporting System'
+A 2 70DATE
+A EDTCDE(Y)
+A 3 70TIME
+A 3 27'Employee Master Maintenance'
+A 5 30'Reason Code'
+A RSCDE R O 5 43REFFLD(RCRSN/RSCDE *LIBL/RSNMST)
+A 7 9'Description'
+A RSDSC R B 7 22REFFLD(RCRSN/RSDSC *LIBL/RSNMST)
+A 90 DSPATR(PR)
+A 9 31'Reason Code History'
+A 11 26'Current'
+A 11 36'Year To Prior'
+A 12 27'Month'
+A 12 38'Date Year'
+A RSHRC R O 13 26REFFLD(RCRSN/RSHRC *LIBL/RSNMST)
+A RSHRY R O 13 35REFFLD(RCRSN/RSHRY *LIBL/RSNMST)
+A RSHRP R O 13 46REFFLD(RCRSN/RSHRP *LIBL/RSNMST)
+A EMESS 50 O 21 16
+A 61 DSPATR(HI)
+A 23 7'F3-End of Job'
+A 23 25'F4-Maintenance Selection'
+A 23 54'F7-Reason Code Selection'
+
+A********************************************************************
+A* CTLFIL - Data Area Control File
+A* DESCRIPTION - A data area control file containing control-level
+A* information for the time reporting system. The
+A* data area contains one record format.
+A********************************************************************
+A..........T.Name++++++RLen++TDpB......Functions++++++++++++++++++++*
+A REF(REFMST)
+A R RCCTL TEXT('CONTROL FILE')
+A CTCDE R
+A CWKDT R
+A CMTDT R
+A CALLE R
+A K CTCDE
+
+
+
+A********************************************************************
+A* REFMST - Database Reference Master File
+A* DESCRIPTION - A file containing field-level information for the
+A* time reporting system files. This field-level
+A* information is referenced when the specific
+A* physical and logical files are created. The field-
+A* level information is also referenced by SDA when
+A* display formats are created.
+A********************************************************************
+A R RCREF TEXT('DATA BASE REFERENCE')
+A* COMMON FIELDS
+A ACREC 1 TEXT('ACTIVE RECORD CODE')
+A COLHDG('ACREC')
+A DATFL 6 0 TEXT('DATE FIELD')
+A COLHDG('DATE' 'MMDDYY')
+A* EMPLOYEE MASTER RELATED FIELDS
+A EMPNO 6 0 TEXT('EMPLOYEE NUMBER')
+A COLHDG('EMPLOYEE' 'NUMBER')
+A ENAME 30 TEXT('EMPLOYEE NAME')
+A COLHDG('EMPLOYEE' 'NAME')
+A EMCAT 1 TEXT('EMPLOYEE CATEGORY')
+A COLHDG('EMP' 'CAT')
+A EDEPT 5 TEXT('EMPLOYEE DEPARTMENT')
+A COLHDG('EMPL' 'DEPT')
+A ELOCN 30 TEXT('EMPLOYEE LOCATION')
+A COLHDG('EMPLOYEE' 'LOCATION')
+A EUSRI 8 TEXT('EMPLOYEE USRID')
+A COLHDG('EMPLOYEE' 'USRID')
+A ENHRS 3 1 TEXT('EMPLOYEE NORMAL WEEK HOURS')
+A COLHDG('NORMAL' 'WK HRS')
+A EPHRC 5 1 TEXT('PROJECT HOURS CURRENT MONTH')
+A COLHDG('PRJ HRS' 'CUR MTH')
+A EPNRC 5 1 TEXT('NON PROJECT HOURS CURR MONTH')
+A COLHDG('NON PRJ HRS' 'CUR MTH')
+A EPHRY 7 1 TEXT('PROJECT HOURS YEAR TO DATE')
+A COLHDG('PRJ HRS' 'YTD')
+A EPHRP 7 1 TEXT('PROJECT HOURS PRIOR YEAR')
+A COLHDG('PRJ HRS' 'PRIOR YR')
+A EPNRY 7 1 TEXT('NON PROJECT HOURS YTD')
+A COLHDG('NON PRJ' 'HRS YTD')
+A EPNRP 7 1 TEXT('NON PROJECT HOURS PRIOR YEAR')
+A COLHDG('NON PRJ HRS' 'PRIOR YR')
+A EHWRK 5 1 TEXT('EMPLOYEE HOURS WORKED')
+A COLHDG('EMP HRS' 'WORKED')
+A* PROJECT MASTER RELATED FIELDS
+A PRCDE 8 TEXT('PROJECT CODE')
+A COLHDG('PROJECT' 'CODE')
+A PRDSC 50 TEXT('PROJECT DESCRIPTION')
+A COLHDG('PROJECT' 'DESCRIPTION')
+A PRRSP 30 TEXT('PROJECT RESPONSIBILITY')
+A COLHDG('PROJECT' 'RESPONSIBILITY')
+A PRSTR R REFFLD(DATFL)
+A TEXT('PROJECT START DATE')
+A COLHDG('PRJ START' 'DATE')
+A PREND R REFFLD(DATFL)
+A TEXT('PROJECT ESTIMATED END DATE')
+A COLHDG('PRJ EST' 'END DATE')
+A PRCMP R REFFLD(DATFL)
+A TEXT('PROJECT COMPLETION DATE')
+A COLHDG('PRJ CMP' 'DATE')
+A PREST 9 1 TEXT('PROJECT ESTIMATED TOTAL HRS')
+A COLHDG('PRJ EST' 'TOT HRS')
+A PRHRC 7 1 TEXT('PROJECT HOURS CURRENT MONTH')
+A COLHDG('PRJ HRS' 'CUR MTH')
+A PRHRY 9 1 TEXT('PROJECT HOURS YEAR TO DATE')
+A COLHDG('PRJ HRS' 'YTD')
+A PRHRP 9 1 TEXT('PROJECT HOURS PRIOR YEAR')
+A COLHDG('PRJ HRS' 'PRIOR YR')
+A* REASON CODE MASTER RELATED FIELDS
+A RSCDE 8 TEXT('REASON CODE')
+A COLHDG('REASON' 'CODE')
+A RSDSC 50 TEXT('REASON CODE DESCRIPTION')
+A COLHDG('REASON CODE' 'DESCRIPTION')
+A RSHRC 7 1 TEXT('REASON CODE HRS CURR MONTH')
+A COLHDG('RSN CDE HRS' 'CUR MTH')
+A RSHRY 9 1 TEXT('REASON CODE HRS YEAR TO DATE')
+A COLHDG('RSN CDE' 'HRS YTD')
+A RSHRP 9 1 TEXT('REASON CODE HOURS PRIOR YEAR')
+A COLHDG('RSN CDE HRS' 'PRIOR YR')
+A* CONTROL FILE RELATED FIELDS
+A CTCDE 6 TEXT('CONTROL RECORD CODE')
+A COLHDG('CTL REC' 'CODE')
+A CWKDT 6S 0 TEXT('WEEK ENDING DATE')
+A COLHDG('WEEK END' 'DATE')
+A CMTDT 6S 0 TEXT('MONTH ENDING DATE')
+A COLHDG('MTH END' 'DATE')
+A CALLE 1 TEXT('ALL ENTRIES MADE FLAG')
+A COLHDG('ENTRIES' 'FLAG')
+
+
+A********************************************************************
+A* EMPMST - Employee Master File
+A* DESCRIPTION - A file containing one record for each employee
+A* enrolled in the time reporting system. Current
+A* month, year-to-date, prior year project, and
+A* non-project-related activity are maintained.
+A********************************************************************
+A UNIQUE
+A REF(REFMST)
+A R RCEMP TEXT('EMPLOYEE MASTER')
+A ACREC R
+A EMPNO R
+A ENAME R
+A EMCAT R
+A EDEPT R
+A ELOCN R
+A EUSRI R
+A ENHRS R
+A EPHRC R
+A EPHRY R
+A EPHRP R
+A EPNRC R
+A EPNRY R
+A EPNRP R
+A K EMPNO
+
+A********************************************************************
+A* PRJMST - Project Master File
+A* DESCRIPTION - A file containing information related to project
+A* activity. Current month, year-to-date, and prior
+A* year activity are maintained. One record exists
+A* for each project code.
+A********************************************************************
+A UNIQUE
+A REF(REFMST)
+A R RCPRJ TEXT('PROJECT MASTER')
+A ACREC R
+A PRCDE R
+A PRDSC R
+A PRRSP R
+A PRSTR R
+A PREND R
+A PRCMP R
+A PREST R
+A PRHRC R
+A PRHRY R
+A PRHRP R
+A K PRCDE
+
+A********************************************************************
+A* RSNMST - Reason-Code Master File
+A* DESCRIPTION - A file containing information related to non-project
+A* activity. Current month, year-to-date, and prior
+A* year activity are maintained. One record exists
+A* for each reason code.
+A********************************************************************
+A UNIQUE
+A REF(REFMST)
+A R RCRSN TEXT('REASON CODE MASTER')
+A ACREC R
+A RSCDE R
+A RSDSC R
+A RSHRC R
+A RSHRY R
+A RSHRP R
+A K RSCDE
+
+A********************************************************************
+A* TRWEEK - Weekly Transaction Entry File
+A* DESCRIPTION - A file containing all entries made to the time
+A* reporting system for the week.
+A********************************************************************
+A REF(REFMST)
+A R RCWEEK TEXT('TRANSACTION ENTRY WEEKLY')
+A ACREC R
+A EMPNO R
+A EUSRI R
+A ACDAT 6S 0
+A CWKDT R
+A CMTDT R
+A PRCDE R
+A RSCDE R
+A EHWRK R
+A TFRRN 3 0
+
+
+A********************************************************************
+A* TRWEEKL - Logical View of Weekly Transaction Entry File
+A* DESCRIPTION - The transaction entry program uses this file to
+A* allow redisplay of existing employee entries and
+A* update records added or changed in the subfile
+A* entry.
+A********************************************************************
+A R RCWEEK PFILE(TRWEEK)
+A K EMPNO
+A K TFRRN
+
+A********************************************************************
+A* TRMNTH - Monthly Transaction Entry File
+A* DESCRIPTION - A file containing all entries made to the time
+A* reporting system for the month.
+A********************************************************************
+A REF(REFMST)
+A R RCMNTH TEXT('TRANSACTION ENTRY MONTHLY')
+A ACREC R
+A EMPNO R
+A EUSRI R
+A CWKDT R
+A CMTDT R
+A PRCDE R
+A RSCDE R
+A EHWRK R
+
+A********************************************************************
+A* TRMNTHL - Logical View of Monthly Transaction Entry File
+A* DESCRIPTION - This file is used by the time-entry employee
+A* monthly reporting system.
+A********************************************************************
+A R RCMNTH PFILE(TRMNTH)
+A K CWKDT
+A K EMPNO
+
+A********************************************************************
+A* TRMNTHR - Logical View of Monthly Transaction Entry File
+A* DESCRIPTION - This file is used by the time-entry project
+A* monthly reporting system.
+A********************************************************************
+A R RCMNTH PFILE(TRMNTH)
+A K PRCDE
+A K CWKDT
+A K EMPNO
+A O PRCDE COMP(EQ ' ')
+A********************************************************************
+A* TRMNTHN - Logical View of Monthly Transaction Entry File
+A* DESCRIPTION - This file is used by the time-entry reason-code
+A* monthly reporting system.
+A********************************************************************
+A R RCMNTH PFILE(TRMNTH)
+A K RSCDE
+A K CWKDT
+A K EMPNO
+A O RSCDE COMP(EQ ' ')
+
+
+
+
+
+

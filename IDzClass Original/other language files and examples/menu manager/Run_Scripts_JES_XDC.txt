@@ -1,0 +1,5 @@
+JOB XDC
+exec 'user93.rexx(parsexdc)' '$input(Job ID,$jobid,$list{$jobid}) $input(Host Name,$systemhostname) $input(User ID,$userid) $input(Job Owner,$jobowner) $input(Job Name,$jobname)'
+
+Dataset XDC
+exec 'user93.rexx(jdsxdc)' '$input(Job ID,$jobid,$list{$jobid}) $input(Host Name,$systemhostname) $input(User ID, $userid) $input(Job Owner, $jobowner) $input(Job Name, $jobname) $input(Step Name, $stepname) $input(DDName, $ddname) $input(DSName, $dsname)'
